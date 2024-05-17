@@ -9,3 +9,5 @@ Vite.js has been used for the fronted, using the template for React with TypeScr
 # Backend
 
 FastAPI has been used for the backend, using SQLite with SQLAlchemy for a lightweight self-contained database.
+
+# Schema
