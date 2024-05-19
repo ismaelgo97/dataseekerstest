@@ -1,0 +1,17 @@
+button {
+  padding: 8px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+}
+
+button:hover {
+  background-color: lightgray;
+  border-color: unset;
+  border: none;
+}

@@ -43,15 +43,15 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db, user)
 
-@app.post("/users/email", response_model=schemas.User)
-def read_user_email(email: str, db: Session = Depends(get_db)):
+@app.get("/users/email/{email}", response_model=schemas.User)
+def read_user_by_email(email: str, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email)
     if db_user is None:
         raise HTTPException(status_code=400, detail="User not found")
     return db_user
 
-@app.post("/users/suggest", response_model=list[schemas.User])
-def read_user_email(email: str, db: Session = Depends(get_db)):
+@app.get("/users/suggest/{email}", response_model=list[schemas.User])
+def suggest_users_by_email(email: str, db: Session = Depends(get_db)):
     db_users = crud.get_user_suggestions_by_email(db, email)
     if db_users is None:
         raise HTTPException(status_code=400, detail="Not users found")
@@ -71,6 +71,16 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+@app.get("/users/connections/{user_id}", response_model=list[schemas.User])
+def get_users_connections_by_state(user_id: int, state: bool | None = True, db: Session = Depends(get_db)):
+    db_users = None
+    if state is True:
+        db_users = crud.get_users_connections(db, user_id)
+    elif state is False:
+        db_users = crud.get_users_declined_connections(db, user_id)
+    else:
+        db_users = crud.get_users_pending_connections(db, user_id)
+    return db_users
 
 ## Connections
 @app.get("/connections/", response_model=list[schemas.Connection])
@@ -116,8 +126,8 @@ def delete_connection(connection_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Connection not found")
     return db_connection
 
-@app.post("/connections/answer/{connection_id}", response_model=schemas.Connection)
-def create_connection(connection_id: int, answer: bool, db: Session = Depends(get_db)):
+@app.put("/connections/answer/{connection_id}", response_model=schemas.Connection)
+def answer_connection(connection_id: int, answer: bool, db: Session = Depends(get_db)):
     db_connection = crud.answer_connection(db, connection_id, answer)
     if db_connection is None:
         raise HTTPException(status_code=400, detail="Connection not found")

@@ -1,0 +1,45 @@
+table {
+  border-collapse: collapse;
+  border: 2px solid darkgray;
+  width: 600px;
+}
+
+td {
+  padding: 2px 8px;
+}
+
+th {
+  padding: 2px 8px;
+}
+
+thead:first-child {
+  border-bottom: 2px solid darkgray;
+}
+
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-button {
+  background-color: lightgreen;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.user-button:hover {
+  background-color: limegreen;
+}
+
+.delete-button {
+  background-color: lightcoral;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.delete-button:hover {
+  background-color: red;
+}
